@@ -55,12 +55,13 @@ const navItems = document.querySelectorAll('.menu__link');
 navItems.forEach(navItem => {
   const linkName = navItem.innerHTML;
   const anchorPoint = document.querySelector(`[data-nav="${linkName}"]`)
-  console.log(anchorPoint)
+  const anchorPosition = anchorPoint.getBoundingClientRect();
+  console.log(anchorPosition)
   navItem.addEventListener('click', (e) =>{
     console.log(e.target)
-    anchorPoint.scrollTo({
-      top: 0,
-      left: 0,
+    window.scrollTo({
+      top: anchorPosition.top,
+      left: anchorPosition.left,
       behavior: 'smooth'
     })
   })

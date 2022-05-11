@@ -80,6 +80,7 @@ document.addEventListener('scroll', (e) =>{
     
     // function to decide what section youre in
   })
+})
 // Scroll to anchor ID using scrollTO event
 const navItems = document.querySelectorAll('.menu__link');
 navItems.forEach(navItem => {

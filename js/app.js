@@ -24,8 +24,7 @@
  */
 const sections = document.querySelectorAll("[data-nav]");
 const navUl = document.getElementById("navbar__list");
-
-
+const scrollToTop = document.getElementById("scroll__top")
 
 /**
  * End Global Variables
@@ -33,29 +32,33 @@ const navUl = document.getElementById("navbar__list");
  *
  */
 const buildListItems = (section) => {
-  const listElement = document.createElement('li')
-  listElement.innerHTML = section.getAttribute('data-nav');
+  const listElement = document.createElement("li");
+  listElement.innerHTML = section.getAttribute("data-nav");
   listElement.classList.add("menu__link");
   navUl.appendChild(listElement);
-}
+};
 
 const isInView = (section) => {
-  const sectionPosition = section.getBoundingClientRect()
-  if (window.pageYOffset >= sectionPosition.top){
-    return true
+  const sectionPosition = section.getBoundingClientRect();
+  if (
+    window.pageYOffset >= sectionPosition.top + window.pageYOffset &&
+    window.pageYOffset <= sectionPosition.bottom + window.pageYOffset
+  ) {
+    return true;
   }
-}
+};
 
-const notInView = (section) => {
-  const sectionPosition = section.getBoundingClientRect()
-  if (window.pageYOffset >= sectionPosition.top){
-    return false;
-  }
-}
-const matchNavToSection = (nav) =>{
+const matchNavToSection = (nav) => {
   const linkName = nav.innerHTML;
-  const anchorPoint = document.querySelector(`[data-nav="${linkName}"]`)
-  return anchorPoint
+  const anchorPoint = document.querySelector(`[data-nav="${linkName}"]`);
+  return anchorPoint;
+};
+const hideOnTop = (elem) => {
+  if (window.pageYOffset <= 50){
+    elem.style.display = "none";
+  }else{
+    elem.style.display = "block";
+  }
 }
 /**
  * End Helper Functions
@@ -64,39 +67,43 @@ const matchNavToSection = (nav) =>{
  */
 
 // build the nav
-sections.forEach(section =>{
+sections.forEach((section) => {
   buildListItems(section);
-})
+});
+
 // Add class 'active' to section when near top of viewport
-document.addEventListener('scroll', (e) =>{
-    navItems.forEach(item => {
-      const currentSection = matchNavToSection(item);
-      if (isInView(currentSection)){
-        item.classList.add('your-active-class');
-      }
-      if (notInView(currentSection)){
-        item.classList.remove('your-active-class')
-      }
-    
-    // function to decide what section youre in
-  })
-})
+document.addEventListener("scroll", (e) => {
+  navItems.forEach((item) => {
+    item.classList.remove("your-active-class");
+    const currentSection = matchNavToSection(item);
+    if (isInView(currentSection)) {
+      item.classList.add("your-active-class");
+    }
+    hideOnTop(scrollToTop);
+  });
+});
 // Scroll to anchor ID using scrollTO event
-const navItems = document.querySelectorAll('.menu__link');
-navItems.forEach(navItem => {
+const navItems = document.querySelectorAll(".menu__link");
+navItems.forEach((navItem) => {
   const linkName = navItem.innerHTML;
   const anchorPoint = document.querySelector(`[data-nav="${linkName}"]`);
   const anchorPosition = anchorPoint.getBoundingClientRect();
-  navItem.addEventListener('click', (e) =>{
+  navItem.addEventListener("click", (e) => {
     window.scrollTo({
-      top: anchorPosition.top,
+      top: anchorPosition.top + 10,
       left: anchorPosition.left,
-      behavior: 'smooth'
-    })
+      behavior: "smooth",
+    });
+  });
+});
+scrollToTop.addEventListener("click", (e) =>{
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
   })
 })
-console.log(navItems)
-/** 
+/**
  * End Main Functions
  * Begin Events
  *
@@ -106,4 +113,6 @@ console.log(navItems)
 
 // Scroll to section on link click
 
-// Set sections as active
+// Set sections as 21`
+
+//hide scroll to top button when not at top

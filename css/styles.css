@@ -209,12 +209,8 @@ section:nth-of-type(3n + 1) .landing__container::after {
 /* Section Active Styles */
 /* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
 .your-active-class {
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: #3410ab;
+  color: #fff;
 }
 
 .your-active-class .landing__container::before {
@@ -235,4 +231,13 @@ section:nth-of-type(3n + 1) .landing__container::after {
   to {
     transform: rotate(360deg) translate(-1em) rotate(-360deg);
   }
+}
+/* scroll to top button */
+#scroll__top{
+  height: 40px;
+  width: 40px;
+  opacity: .5;
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
 }

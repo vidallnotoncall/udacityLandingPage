@@ -42,8 +42,8 @@ const buildListItems = (section) => {
 const isInView = (section) => {
   const sectionPosition = section.getBoundingClientRect();
   if (
-    window.pageYOffset >= sectionPosition.top + window.pageYOffset &&
-    window.pageYOffset <= sectionPosition.bottom + window.pageYOffset
+    window.pageYOffset >= (sectionPosition.top + window.pageYOffset - navUl.offsetHeight) &&
+    window.pageYOffset <= (sectionPosition.bottom + window.pageYOffset - navUl.offsetHeight)
   ) {
     return true;
   }
@@ -66,6 +66,7 @@ const hideOnTop = (elem) => {
 //use any elent to scroll to the top of the page with a click
 const scrollToTop = (elem) => {
   elem.addEventListener("click", (e) => {
+    e.preventDefault()
     window.scrollTo({
       top: 0,
       left: 0,
@@ -101,7 +102,7 @@ const navItems = document.querySelectorAll(".menu__link");
     add the active class styling
     also on scroll hide the to top arrow when your already on top
 */
-document.addEventListener("scroll", (e) => {
+window.addEventListener("scroll", (e) => {
   navItems.forEach((item) => {
     item.classList.remove("your-active-class");
     const currentSection = matchNavToSection(item);
@@ -122,13 +123,14 @@ document.addEventListener("scroll", (e) => {
 navItems.forEach((navItem) => {
   const anchorPosition = matchNavToSection(navItem).getBoundingClientRect();
   navItem.addEventListener("click", (e) => {
+    e.preventDefault()
     window.scrollTo({
       top: anchorPosition.top + 10,
       left: anchorPosition.left,
       behavior: "smooth",
     });
-  });
-  scrollToTop(topArrow);
+  });  
 });
 
+scrollToTop(topArrow);
 
